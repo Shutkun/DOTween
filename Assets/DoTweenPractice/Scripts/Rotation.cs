@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class CubeRotation : MonoBehaviour
+public class Rotation : MonoBehaviour
 {
     [SerializeField] private Vector3 _rotationVector;
     [SerializeField] private float _duration;
@@ -15,6 +15,11 @@ public class CubeRotation : MonoBehaviour
     }
 
     private void OnDisable()
+    {
+        _rotationTween?.Kill();
+    }
+
+    private void OnDestroy()
     {
         _rotationTween?.Kill();
     }

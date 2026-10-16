@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class CubeMove : MonoBehaviour
+public class Move : MonoBehaviour
 {
     [SerializeField] private Vector3 _position;
     [SerializeField] private float _duration;
@@ -16,6 +16,11 @@ public class CubeMove : MonoBehaviour
     }
 
     private void OnDisable()
+    {
+        _moveTween?.Kill();
+    }
+
+    private void OnDestroy()
     {
         _moveTween?.Kill();
     }

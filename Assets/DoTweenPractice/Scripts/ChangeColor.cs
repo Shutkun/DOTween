@@ -19,6 +19,11 @@ public class ChangeColor : MonoBehaviour
         _colorTween?.Kill();
     }
 
+    private void OnDestroy()
+    {
+        _colorTween?.Kill();
+    }
+
     private void AnimateColor()
     {
         _colorTween = _spriteRenderer.DOColor(_targetColor, _duration);

@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,45 +7,29 @@ public class ChangeText : MonoBehaviour
     [SerializeField] private Text _text;
 
     private float _duration = 3;
-    private float _delay = 4;
-    private Coroutine _coroutine;
-    private Tween _textTween;
+    private Sequence _sequence;
 
-    private void OnEnable()
+    private void Start()
     {
-        _coroutine = StartCoroutine(PlayTextSequence());
+        StartSequence();
     }
 
     private void OnDisable()
     {
-        StopCoroutine();
-        _textTween?.Kill();
+        _sequence?.Kill();
     }
 
-    private IEnumerator PlayTextSequence()
+    private void OnDestroy()
     {
-        WaitForSeconds wait = new WaitForSeconds(_delay);
-        WaitForSeconds firstWait = new WaitForSeconds(_delay - 2f);
-
-        _textTween?.Kill();
-        yield return firstWait;
-        _textTween = _text.DOText("Замена", _duration);
-        
-        yield return wait;
-        _textTween?.Kill();
-        _textTween = _text.DOText(",  дополнение", _duration).SetRelative();
-
-        yield return wait;
-        _textTween?.Kill();
-        _textTween = _text.DOText("Взлом", _duration, true, ScrambleMode.All);
-
+        _sequence?.Kill();
     }
 
-    private void StopCoroutine()
+    private void StartSequence()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-        }
+        _sequence = DOTween.Sequence();
+
+        _sequence.Append(_text.DOText("Замена", _duration));
+        _sequence.Append(_text.DOText(",  дополнение", _duration).SetRelative());
+        _sequence.Append(_text.DOText("Взлом", _duration, true, ScrambleMode.All));
     }
 }

@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class CapsuleScale : MonoBehaviour
+public class Scale : MonoBehaviour
 {
     [SerializeField] private Vector3 _scaleVector;
     [SerializeField] private float _duration;
@@ -14,6 +14,11 @@ public class CapsuleScale : MonoBehaviour
     }
 
     private void OnDisable()
+    {
+        _scacleTween?.Kill();
+    }
+
+    private void OnDestroy()
     {
         _scacleTween?.Kill();
     }
